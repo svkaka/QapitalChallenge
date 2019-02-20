@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">QapitalChallenge</string>
+    <string name="goals">Goals</string>
+
+    <string name="current_of_total">$%.0f of %.0f</string>
+    <string name="current_of_null">$%.0f</string>
+    <string name="dollar_amount">$%.2f</string>
+    <string name="week_sum">This week • <strong>$%.2f</strong></string>
+
+</resources>

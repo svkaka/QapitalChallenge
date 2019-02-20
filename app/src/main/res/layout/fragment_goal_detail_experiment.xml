@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="goal"
+            type="com.ovrbach.qapitalchallenge.data.entity.Goal"/>
+
+        <variable
+            name="sum"
+            type="Float"/>
+
+        <import type="com.ovrbach.qapitalchallenge.util.BindingUtilsKt"/>
+
+        <import type="com.ovrbach.qapitalchallenge.util.DateUtilsKt"/>
+    </data>
+
+    <androidx.constraintlayout.motion.widget.MotionLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        app:layoutDescription="@xml/collapsing_toolbar">
+
+        <com.ovrbach.qapitalchallenge.util.custom.ForegroundImageView
+            android:id="@+id/toolbar_image"
+            android:layout_width="0dp"
+            android:layout_height="208dp"
+            android:background="@color/colorPrimary"
+            android:scaleType="centerCrop"
+            app:foreground="@drawable/gradient_scrim_dark"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/beach_huts"/>
+
+        <ImageView
+            android:id="@+id/home"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:contentDescription="@null"
+            android:src="@drawable/abc_ic_ab_back_material"
+            android:tint="?android:attr/textColorPrimaryInverse"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="PrivateResource"/>
+
+        <TextView
+            android:id="@+id/title"
+            android:textStyle="bold"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:text="@{BindingUtilsKt.toSpanned(goal.name)}"
+            android:textColor="?android:attr/textColorPrimaryInverse"
+            android:textSize="32sp"
+            app:layout_constraintBottom_toTopOf="@+id/subtitle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:text="Dream house"/>
+
+        <LinearLayout
+            android:id="@+id/subtitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="@id/toolbar_image"
+            app:layout_constraintEnd_toEndOf="@+id/title"
+            app:layout_constraintStart_toStartOf="@+id/title">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{goal.targetAmount == null ? @string/current_of_null(goal.currentBalance) : @string/current_of_total(goal.currentBalance, goal.targetAmount) }"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+                android:textColor="@color/white"
+                tools:text="#1,201 of $6004"/>
+
+            <ProgressBar
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="24dp"
+                android:max="100"
+                android:progress="@{BindingUtilsKt.getProgress(goal.currentBalance, goal.targetAmount)}"
+                android:progressTint="@color/colorAccent"
+                app:makeVisible="@{goal.targetAmount!=null}"/>
+        </LinearLayout>
+
+        <FrameLayout
+            android:visibility="gone"
+            android:id="@+id/detail_progress"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"/>
+        </FrameLayout>
+
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/detail_error"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="HAHAHAH"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"/>
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/scroll_view"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar_image">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="16dp"
+                    android:paddingBottom="16dp"
+                    android:background="@color/grey"
+                    android:gravity="center"
+                    android:text="@{@string/week_sum(sum)}"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+                    tools:text="This week • $11.0"/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/detail_recycler"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"/>
+
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+
+    </androidx.constraintlayout.motion.widget.MotionLayout>
+</layout>

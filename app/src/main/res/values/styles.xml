@@ -1,0 +1,24 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="AppTheme.TextAppearance"/>
+
+
+    <style name="AppTheme.TextAppearance.Feed" parent="TextAppearance.MaterialComponents.Body1"/>
+
+    <style name="AppTheme.TextAppearance.Feed.Save" parent="TextAppearance.MaterialComponents.Body1">
+        <item name="android:textColor">@color/green</item>
+    </style>
+
+    <style name="AppTheme.TextAppearance.Feed.Take" parent="TextAppearance.MaterialComponents.Body1">
+        <item name="android:textColor">@color/red</item>
+    </style>
+
+</resources>
