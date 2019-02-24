@@ -1,51 +1,67 @@
 package com.ovrbach.qapitalchallenge.features.detail
 
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
-import androidx.lifecycle.ViewModel
-import com.ovrbach.qapitalchallenge.api.GoalsApi
-import com.ovrbach.qapitalchallenge.data.base.Request
-import com.ovrbach.qapitalchallenge.data.entity.Feed
-import com.ovrbach.qapitalchallenge.util.MILLIS_IN_WEEK
+import com.ovrbach.qapitalchallenge.Repository
+import com.ovrbach.qapitalchallenge.common.base.Result
+import com.ovrbach.qapitalchallenge.common.base.Source
+import com.ovrbach.qapitalchallenge.common.base.isSuccess
+import com.ovrbach.qapitalchallenge.common.entity.Feed
+import com.ovrbach.qapitalchallenge.common.entity.setGoalId
+import com.ovrbach.qapitalchallenge.common.logic.MILLIS_IN_WEEK
+import com.ovrbach.qapitalchallenge.common.logic.sumBy
 import com.ovrbach.qapitalchallenge.util.subscribeOnNewObserveOnMain
-import com.ovrbach.qapitalchallenge.util.sumBy
 import io.reactivex.disposables.CompositeDisposable
 import java.util.*
 
-class DetailViewModel : ViewModel() {
+class DetailViewModel(context: Application) : AndroidViewModel(context) {
 
     private val compositeDisposable = CompositeDisposable()
 
-    private val api: GoalsApi = GoalsApi.instance
+    private val repository = Repository.getInstance(getApplication())
 
-    val feedMutableData: MutableLiveData<Request<List<Feed>>> = MutableLiveData()
-    val lastWeekSum: LiveData<Float> = Transformations.map(feedMutableData) { request ->
-        (request as? Request.Success<List<Feed>>)?.also {
+    val feedMutableData: MutableLiveData<Result<List<Feed>>> =
+        MutableLiveData()
+    val lastWeekSum: LiveData<Float> = Transformations.map(feedMutableData) { result ->
+        (result as? Result.Success<List<Feed>>)?.let {
             it.data
-                .filter { feed -> feed.date() > Date(System.currentTimeMillis() - MILLIS_IN_WEEK) }
+                .filter { feed -> feed.date > Date(System.currentTimeMillis() - MILLIS_IN_WEEK) }
                 .sumBy { feed -> feed.amount }
-        }
-        0f
+        } ?: 0F
     }
 
     fun loadFeed(id: Int) {
-        if (feedMutableData.value == null) {
-            feedMutableData.postValue(Request.Waiting)
+        feedMutableData.postValue(Result.Waiting)
 
-            val disposable = api.feedService.getFeed(id)
-                .subscribeOnNewObserveOnMain()
-                .subscribe(
-                    { wrapper ->
-                        val feed = wrapper.feed
-                        feedMutableData.postValue(Request.Success(feed))
-                    },
-                    { feedMutableData.postValue(Request.Error(it)) }
-                )
+        val disposable = repository.getFeedForGoal(id)
+            .subscribeOnNewObserveOnMain()
+            .subscribe(
+                { response ->
+                    val feed = response.data
+                    feedMutableData.postValue(
+                        Result.Success(feed)
+                    )
+                    if (response.source == Source.REMOTE) {
+                        feed.setGoalId(id)
+                        repository.updateFeedDatabase(feed)
+                    }
+                },
+                {
+                    if (!feedMutableData.value.isSuccess()) {
+                        feedMutableData.postValue(Result.Error(it))
+                    }
+                }
+            )
 
-            compositeDisposable.add(disposable)
-        } else {
-            feedMutableData.postValue(Request.Waiting)
-        }
+        compositeDisposable.add(disposable)
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        compositeDisposable.clear()
     }
 }
+

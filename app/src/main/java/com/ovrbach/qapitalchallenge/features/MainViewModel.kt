@@ -1,47 +1,44 @@
 package com.ovrbach.qapitalchallenge.features
 
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import com.ovrbach.qapitalchallenge.api.GoalsApi
-import com.ovrbach.qapitalchallenge.data.base.Request
-import com.ovrbach.qapitalchallenge.data.entity.Goal
-import com.ovrbach.qapitalchallenge.data.entity.User
+import com.ovrbach.qapitalchallenge.Repository
+import com.ovrbach.qapitalchallenge.common.base.Result
+import com.ovrbach.qapitalchallenge.common.base.isSuccess
+import com.ovrbach.qapitalchallenge.common.entity.Goal
 import com.ovrbach.qapitalchallenge.util.subscribeOnNewObserveOnMain
 import io.reactivex.disposables.CompositeDisposable
 
-class MainViewModel : ViewModel() {
+class MainViewModel(context: Application) : AndroidViewModel(context) {
 
     private val compositeDisposable = CompositeDisposable()
 
-    private val api: GoalsApi = GoalsApi.instance
+    private val repository = Repository.getInstance(getApplication())
 
-    val goalsLiveData: MutableLiveData<Request<List<Goal>>> = MutableLiveData()
-
-    val usersLiveData: MutableLiveData<Request<User>> = MutableLiveData()
+    val goalsLiveData: MutableLiveData<Result<List<Goal>>> = MutableLiveData()
 
     fun fetchGoals() {
-        if (usersLiveData.value == null) {
-            goalsLiveData.postValue(Request.Waiting)
+        goalsLiveData.postValue(Result.Waiting)
 
-            val goalsDisposable = api.goalService.getSavedGoals()
-                .subscribeOnNewObserveOnMain()
-                .doOnNext {
+        val goalsDisposable = repository.getGoals()
+            .subscribeOnNewObserveOnMain()
+            .subscribe(
+                { response ->
+                    val goals = response.data
+                    goalsLiveData.postValue(Result.Success(goals))
+                    if (response.source.isRemote()) {
+                        repository.updateGoalsDatabase(goals)
+                    }
+                },
+                {
+                    if (!goalsLiveData.value.isSuccess()) {
+                        goalsLiveData.postValue(Result.Error(it))
+                    }
                 }
-                .doOnError {
+            )
 
-                }
-                .subscribe(
-                    { goalsWrapper ->
-                        val goals = goalsWrapper.savingsGoals
-                        goalsLiveData.postValue(Request.Success(goals))
-                    },
-                    { goalsLiveData.postValue(Request.Error(it)) }
-                )
-
-            compositeDisposable.add(goalsDisposable)
-        } else {
-            usersLiveData.postValue(usersLiveData.value)
-        }
+        compositeDisposable.add(goalsDisposable)
     }
 
     override fun onCleared() {

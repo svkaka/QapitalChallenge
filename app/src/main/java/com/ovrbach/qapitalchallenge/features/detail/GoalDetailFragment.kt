@@ -5,24 +5,21 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ovrbach.qapitalchallenge.R
-import com.ovrbach.qapitalchallenge.data.base.Request
-import com.ovrbach.qapitalchallenge.data.entity.Feed
-import com.ovrbach.qapitalchallenge.data.entity.Goal
+import com.ovrbach.qapitalchallenge.common.base.Result
+import com.ovrbach.qapitalchallenge.common.entity.Feed
+import com.ovrbach.qapitalchallenge.common.entity.Goal
 import com.ovrbach.qapitalchallenge.databinding.FragmentGoalDetailBinding
-import com.ovrbach.qapitalchallenge.databinding.FragmentGoalDetailExperimentBinding
 import com.ovrbach.qapitalchallenge.features.MainNavigation
 import com.ovrbach.qapitalchallenge.util.bind
 import com.ovrbach.qapitalchallenge.util.hide
 import com.ovrbach.qapitalchallenge.util.show
 import kotlinx.android.synthetic.main.fragment_goal_detail.*
 import kotlinx.android.synthetic.main.fragment_goal_detail_experiment.view.*
-import java.lang.IllegalStateException
 
 const val GOAL_KEY = "goal_key"
 
@@ -81,9 +78,9 @@ class GoalDetailFragment : Fragment() {
 
         localViewModel.feedMutableData.observe(this, Observer { status ->
             when (status) {
-                is Request.Success<List<Feed>> -> onSuccess(status.data)
-                is Request.Error -> onError(status.error)
-                is Request.Waiting -> onWaiting()
+                is Result.Success<List<Feed>> -> onSuccess(status.data)
+                is Result.Error -> onError(status.error)
+                is Result.Waiting -> onWaiting()
             }
         })
 

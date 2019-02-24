@@ -3,7 +3,7 @@ package com.ovrbach.qapitalchallenge.features
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.ovrbach.qapitalchallenge.R
-import com.ovrbach.qapitalchallenge.data.entity.Goal
+import com.ovrbach.qapitalchallenge.common.entity.Goal
 import com.ovrbach.qapitalchallenge.features.detail.GoalDetailFragment
 import com.ovrbach.qapitalchallenge.features.list.GoalsFragment
 

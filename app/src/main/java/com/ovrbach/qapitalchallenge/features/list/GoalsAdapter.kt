@@ -5,7 +5,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.ovrbach.qapitalchallenge.R
-import com.ovrbach.qapitalchallenge.data.entity.Goal
+import com.ovrbach.qapitalchallenge.common.entity.Goal
 import com.ovrbach.qapitalchallenge.databinding.ItemGoalBinding
 import com.ovrbach.qapitalchallenge.util.ItemClickListener
 import com.ovrbach.qapitalchallenge.util.bind

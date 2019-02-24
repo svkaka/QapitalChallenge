@@ -4,7 +4,7 @@ import android.view.View
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
-import com.ovrbach.qapitalchallenge.data.base.Request
+import com.ovrbach.qapitalchallenge.common.base.Result
 
 @BindingAdapter("imageUrl")
 fun ImageView.loadImage(url: String) {
@@ -21,8 +21,8 @@ fun View.makeVisible(show: Boolean) {
 }
 
 @BindingAdapter("progressVisibility")
-fun View.progressVisibility(any: Request<Any>) {
-    if (any is Request.Waiting) {
+fun View.progressVisibility(any: Result<Any>) {
+    if (any is Result.Waiting) {
         show()
     } else {
         hide()
@@ -30,8 +30,8 @@ fun View.progressVisibility(any: Request<Any>) {
 }
 
 @BindingAdapter("contentVisibility")
-fun View.contentVisibility(any: Request<Any>) {
-    if (any is Request.Success) {
+fun View.contentVisibility(any: Result<Any>) {
+    if (any is Result.Success) {
         show()
     } else {
         hide()
@@ -39,8 +39,8 @@ fun View.contentVisibility(any: Request<Any>) {
 }
 
 @BindingAdapter("errorVisibility")
-fun View.errorVisibility(any: Request<Any>) {
-    if (any is Request.Error) {
+fun View.errorVisibility(any: Result<Any>) {
+    if (any is Result.Error) {
         show()
     } else {
         hide()

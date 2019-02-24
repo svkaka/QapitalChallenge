@@ -6,8 +6,9 @@
 
         <variable
             name="item"
-            type="com.ovrbach.qapitalchallenge.data.entity.Feed"/>
+            type="com.ovrbach.qapitalchallenge.common.entity.Feed"/>
 
+        <import type="com.ovrbach.qapitalchallenge.common.logic.DateUtilsKt"/>
         <import type="com.ovrbach.qapitalchallenge.util.BindingUtilsKt"/>
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -36,7 +37,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="16dp"
-            android:text="@{BindingUtilsKt.getBestDescribingString(item.date())}"
+            android:text="@{DateUtilsKt.timeAgo(item.date)}"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
             app:layout_constraintBottom_toTopOf="@+id/view"
             app:layout_constraintStart_toStartOf="@+id/textView2"

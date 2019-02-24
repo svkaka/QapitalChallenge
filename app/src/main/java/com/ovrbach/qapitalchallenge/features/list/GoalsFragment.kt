@@ -10,8 +10,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ovrbach.qapitalchallenge.R
-import com.ovrbach.qapitalchallenge.data.base.Request
-import com.ovrbach.qapitalchallenge.data.entity.Goal
+import com.ovrbach.qapitalchallenge.common.base.Result
+import com.ovrbach.qapitalchallenge.common.entity.Goal
 import com.ovrbach.qapitalchallenge.features.MainNavigation
 import com.ovrbach.qapitalchallenge.features.MainViewModel
 import com.ovrbach.qapitalchallenge.util.ItemClickListener
@@ -19,7 +19,6 @@ import com.ovrbach.qapitalchallenge.util.hide
 import com.ovrbach.qapitalchallenge.util.show
 import kotlinx.android.synthetic.main.fragment_goal_list.*
 import kotlinx.android.synthetic.main.fragment_goal_list.view.*
-import java.lang.IllegalStateException
 
 class GoalsFragment : Fragment() {
 
@@ -69,9 +68,9 @@ class GoalsFragment : Fragment() {
 
         viewModel.goalsLiveData.observe(this, Observer { response ->
             when (response) {
-                is Request.Success<List<Goal>> -> onSuccess(response.data)
-                is Request.Error -> onError(response.error)
-                is Request.Waiting -> onLoading()
+                is Result.Success<List<Goal>> -> onSuccess(response.data)
+                is Result.Error -> onError(response.error)
+                is Result.Waiting -> onLoading()
             }
         })
 

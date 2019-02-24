@@ -7,7 +7,7 @@
 
         <variable
             name="goal"
-            type="com.ovrbach.qapitalchallenge.data.entity.Goal"/>
+            type="com.ovrbach.qapitalchallenge.common.entity.Goal"/>
 
         <variable
             name="sum"
@@ -15,7 +15,7 @@
 
         <import type="com.ovrbach.qapitalchallenge.util.BindingUtilsKt"/>
 
-        <import type="com.ovrbach.qapitalchallenge.util.DateUtilsKt"/>
+        <import type="com.ovrbach.qapitalchallenge.common.logic.DateUtilsKt"/>
     </data>
 
     <androidx.constraintlayout.motion.widget.MotionLayout
