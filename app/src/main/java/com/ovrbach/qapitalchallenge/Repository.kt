@@ -10,7 +10,6 @@ import com.ovrbach.qapitalchallenge.local.AppDatabase
 import com.ovrbach.qapitalchallenge.remote.GoalsApi
 import com.ovrbach.qapitalchallenge.util.subscribeOnNewObserveOnMain
 import io.reactivex.Flowable
-import io.reactivex.Observable
 import io.reactivex.Single
 
 //todo dagger
@@ -40,12 +39,12 @@ class Repository private constructor(
         }
     }
 
-
     fun getGoals(): Flowable<Response<List<Goal>>> {
         val local = database.goal().getAll()
             .map { Response(Source.LOCAL, it) }
         val remote = remote.goalService.getSavedGoals()
             .map { Response(Source.REMOTE, it.savingsGoals) }
+            .onErrorReturn { Response(Source.REMOTE, null) }
 
         return Single.concat(local, remote)
     }
@@ -55,6 +54,7 @@ class Repository private constructor(
             .map { Response(Source.LOCAL, it) }
         val remote = remote.feedService.getFeed(id)
             .map { Response(Source.REMOTE, it.feed) }
+            .onErrorReturn { Response(Source.REMOTE, null) }
 
         return Single.concat(local, remote)
     }

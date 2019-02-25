@@ -7,18 +7,17 @@ import java.util.*
 const val MILLIS_IN_SECOND: Long = 1000L
 const val MILLIS_IN_MINUTE = MILLIS_IN_SECOND * 60
 const val MILLIS_IN_HOUR = MILLIS_IN_MINUTE * 60
-const val MILLIS_IN_DAY = MILLIS_IN_HOUR * 60
+const val MILLIS_IN_DAY = MILLIS_IN_HOUR * 24
 const val MILLIS_IN_WEEK = MILLIS_IN_DAY * 7
 const val MILLIS_IN_MONTH = MILLIS_IN_WEEK * 4
 const val MILLIS_IN_3_MONTHS = MILLIS_IN_MONTH * 3
 
-//todo plural
-fun Date.timeAgo(): String {
-    val now = Date(System.currentTimeMillis())
+fun Date.timeAgo() = this.timeAgo(Date(System.currentTimeMillis()))
+
+fun Date.timeAgo(now: Date): String {
     val previous = this
 
     val difference = now.time - previous.time
-
     if (difference > MILLIS_IN_3_MONTHS) {
         return previous.format()
     }

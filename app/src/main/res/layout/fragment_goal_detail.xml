@@ -139,6 +139,8 @@
         </FrameLayout>
 
         <TextView
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+            android:gravity="center"
             android:id="@+id/detail_error"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>

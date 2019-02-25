@@ -12,6 +12,8 @@ dependencies {
 
     //room
     api "androidx.room:room-runtime:$room_version"
+
+    testImplementation 'junit:junit:4.12'
 }
 
 sourceCompatibility = "7"

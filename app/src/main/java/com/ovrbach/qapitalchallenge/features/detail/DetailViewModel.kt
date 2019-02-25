@@ -12,7 +12,7 @@ import com.ovrbach.qapitalchallenge.common.base.isSuccess
 import com.ovrbach.qapitalchallenge.common.entity.Feed
 import com.ovrbach.qapitalchallenge.common.entity.setGoalId
 import com.ovrbach.qapitalchallenge.common.logic.MILLIS_IN_WEEK
-import com.ovrbach.qapitalchallenge.common.logic.sumBy
+import com.ovrbach.qapitalchallenge.common.logic.sumByFloat
 import com.ovrbach.qapitalchallenge.util.subscribeOnNewObserveOnMain
 import io.reactivex.disposables.CompositeDisposable
 import java.util.*
@@ -29,7 +29,7 @@ class DetailViewModel(context: Application) : AndroidViewModel(context) {
         (result as? Result.Success<List<Feed>>)?.let {
             it.data
                 .filter { feed -> feed.date > Date(System.currentTimeMillis() - MILLIS_IN_WEEK) }
-                .sumBy { feed -> feed.amount }
+                .sumByFloat { feed -> feed.amount }
         } ?: 0F
     }
 
@@ -41,13 +41,17 @@ class DetailViewModel(context: Application) : AndroidViewModel(context) {
             .subscribe(
                 { response ->
                     val feed = response.data
-                    feedMutableData.postValue(
-                        Result.Success(feed)
-                    )
-                    if (response.source == Source.REMOTE) {
-                        feed.setGoalId(id)
-                        repository.updateFeedDatabase(feed)
+
+                    if (feed != null) {
+                        if (response.source == Source.REMOTE) {
+                            feed.setGoalId(id)
+                            repository.updateFeedDatabase(feed)
+                        }
+                        feedMutableData.postValue(
+                            Result.Success(feed)
+                        )
                     }
+
                 },
                 {
                     if (!feedMutableData.value.isSuccess()) {

@@ -26,9 +26,11 @@ class MainViewModel(context: Application) : AndroidViewModel(context) {
             .subscribe(
                 { response ->
                     val goals = response.data
-                    goalsLiveData.postValue(Result.Success(goals))
-                    if (response.source.isRemote()) {
-                        repository.updateGoalsDatabase(goals)
+                    if (goals != null) {
+                        goalsLiveData.postValue(Result.Success(goals))
+                        if (response.source.isRemote()) {
+                            repository.updateGoalsDatabase(goals)
+                        }
                     }
                 },
                 {
