@@ -51,7 +51,6 @@ class DetailViewModel(context: Application) : AndroidViewModel(context) {
                             Result.Success(feed)
                         )
                     }
-
                 },
                 {
                     if (!feedMutableData.value.isSuccess()) {

@@ -10,15 +10,17 @@ import com.ovrbach.qapitalchallenge.databinding.ItemGoalBinding
 import com.ovrbach.qapitalchallenge.util.ItemClickListener
 import com.ovrbach.qapitalchallenge.util.bind
 
-class GoalsAdapter(val clickListener: ItemClickListener<Goal>) : ListAdapter<Goal, GoalsAdapter.Holder>(
-    object : DiffUtil.ItemCallback<Goal>() {
+class GoalsAdapter(val clickListener: ItemClickListener<Goal>) :
+    ListAdapter<Goal, GoalsAdapter.Holder>(
+        object : DiffUtil.ItemCallback<Goal>() {
 
-        override fun areItemsTheSame(oldItem: Goal, newItem: Goal): Boolean =
-            oldItem.id == newItem.id
+            override fun areItemsTheSame(oldItem: Goal, newItem: Goal): Boolean =
+                oldItem.id == newItem.id
 
-        override fun areContentsTheSame(oldItem: Goal, newItem: Goal): Boolean = oldItem == newItem
-    }
-) {
+            override fun areContentsTheSame(oldItem: Goal, newItem: Goal): Boolean =
+                oldItem == newItem
+        }
+    ) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         return Holder(parent.bind(R.layout.item_goal))
@@ -28,16 +30,14 @@ class GoalsAdapter(val clickListener: ItemClickListener<Goal>) : ListAdapter<Goa
         holder.bind(getItem(holder.adapterPosition))
     }
 
-    inner class Holder(private val binding: ItemGoalBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class Holder(private val binding: ItemGoalBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: Goal) {
-            //todo move to xml?
             itemView.setOnClickListener {
                 clickListener.onItemClicked(item)
             }
-
             binding.item = item
-            //todo is this the one?
             binding.executePendingBindings()
         }
     }

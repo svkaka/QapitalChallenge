@@ -56,3 +56,4 @@ const val SIMPLE_DATE_FORMAT = "dd/MM/yyyy"
 
 fun String.parseTime(): Date = SimpleDateFormat(SERVER_DATE_FORMAT).parse(this)
 fun Date.format(): String = SimpleDateFormat(SIMPLE_DATE_FORMAT).format(this) ?: ""
+fun Date.formatToServer(): String = SimpleDateFormat(SERVER_DATE_FORMAT).format(this) ?: ""

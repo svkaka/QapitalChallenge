@@ -21,6 +21,7 @@
             android:orientation="vertical">
 
             <com.ovrbach.qapitalchallenge.util.custom.ForegroundImageView
+                android:transitionName="@string/transition_goal"
                 android:id="@+id/imageView"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
@@ -59,5 +60,6 @@
     </androidx.cardview.widget.CardView>
 </layout>
 
-    <!--todo progress bar for goal-->
+    <!--todo animation to show icon-->
+    <!--todo progress bar for goals-->
     <!--todo if completed show icon-->

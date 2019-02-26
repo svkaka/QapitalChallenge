@@ -34,13 +34,13 @@ class Repository private constructor(
 
         private fun buildRepo(context: Context): Repository {
             val database = AppDatabase.getDatabase(context)
-            val remoteApi = GoalsApi.instance
+            val remoteApi = GoalsApi.getInstance()
             return Repository(database, remoteApi)
         }
     }
 
     fun getGoals(): Flowable<Response<List<Goal>>> {
-        val local = database.goal().getAll()
+        val local = database.goals().getAll()
             .map { Response(Source.LOCAL, it) }
         val remote = remote.goalService.getSavedGoals()
             .map { Response(Source.REMOTE, it.savingsGoals) }
@@ -50,7 +50,7 @@ class Repository private constructor(
     }
 
     fun getFeedForGoal(id: GoalId): Flowable<Response<List<Feed>>> {
-        val local = database.feed().getForGoalId(id)
+        val local = database.feed().withGoalId(id)
             .map { Response(Source.LOCAL, it) }
         val remote = remote.feedService.getFeed(id)
             .map { Response(Source.REMOTE, it.feed) }
@@ -60,7 +60,7 @@ class Repository private constructor(
     }
 
     fun updateGoalsDatabase(goals: List<Goal>) {
-        database.goal().insert(goals)
+        database.goals().insert(goals)
             .subscribeOnNewObserveOnMain()
             .subscribe()
     }

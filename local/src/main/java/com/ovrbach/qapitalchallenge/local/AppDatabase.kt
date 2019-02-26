@@ -11,7 +11,7 @@ import com.ovrbach.qapitalchallenge.common.entity.Goal
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun feed(): FeedDao
-    abstract fun goal(): GoalDao
+    abstract fun goals(): GoalDao
 
     companion object {
         @Volatile
@@ -31,7 +31,6 @@ abstract class AppDatabase : RoomDatabase() {
             AppDatabase::class.java,
             "Word_database"
         ).build()
-
     }
 
 }

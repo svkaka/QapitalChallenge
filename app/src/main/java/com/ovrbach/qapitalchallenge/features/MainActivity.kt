@@ -1,7 +1,9 @@
 package com.ovrbach.qapitalchallenge.features
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
 import com.ovrbach.qapitalchallenge.R
 import com.ovrbach.qapitalchallenge.common.entity.Goal
 import com.ovrbach.qapitalchallenge.features.detail.GoalDetailFragment

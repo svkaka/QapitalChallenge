@@ -1,0 +1,74 @@
+{
+        "feed": [
+            {
+                "id": "9d2d3dcd-2b0e-456b-b398-36d42e22bb77",
+                "type": "saving",
+                "timestamp": "2015-03-10T14:55:16.025Z",
+                "message": "<strong>You</strong> made a manual transfer.",
+                "amount": 10,
+                "userId": 1
+            },
+            {
+                "id": "46465046-dbaa-47b2-bdf7-ff8f46729ebe",
+                "type": "saving",
+                "timestamp": "2015-03-09T12:31:16.025Z",
+                "message": "<strong>You</strong> didn't resist a guilty pleasure at <strong>Starbucks</strong>.",
+                "amount": 4,
+                "userId": 1,
+                "savingsRuleId": 2
+            },
+            {
+                "id": "bafc3104-93a1-4fc0-9a24-877fbf782f9e",
+                "type": "saving",
+                "timestamp": "2015-03-09T12:31:16.025Z",
+                "message": "<strong>You</strong> made a roundup.",
+                "amount": 0.78,
+                "userId": 1,
+                "savingsRuleId": 1
+            },
+            {
+                "id": "10188145-154b-4a6b-ae0b-011b386f2850",
+                "type": "saving",
+                "timestamp": "2015-03-08T20:32:15.025Z",
+                "message": "<strong>Johan</strong> made a roundup.",
+                "amount": 0.99,
+                "userId": 3,
+                "savingsRuleId": 1
+            },
+            {
+                "id": "4ece396b-fbfb-4e11-81c4-55e5d29f1206",
+                "type": "saving",
+                "timestamp": "2015-03-08T19:00:02.025Z",
+                "message": "<strong>You</strong> made a manual transfer.",
+                "amount": 12.50,
+                "userId": 1
+            },
+            {
+                "id": "66abbe97-ee20-456e-961c-a1dd556cd3a8",
+                "type": "saving",
+                "timestamp": "2015-03-06T22:00:16.025Z",
+                "message": "<strong>You</strong> didn't resist a guilty pleasure at <strong>Starbucks</strong>.",
+                "amount": 4,
+                "userId": 1,
+                "savingsRuleId": 2
+            },
+            {
+                "id": "005e5375-9b83-478c-9989-68bece80b5d5",
+                "type": "saving",
+                "timestamp": "2015-03-06T22:00:16.025Z",
+                "message": "<strong>You</strong> made a roundup.",
+                "amount": 0.23,
+                "userId": 1,
+                "savingsRuleId": 1
+            },
+            {
+                "id": "209c3e77-877d-4f89-87e3-ab2bcbb91c15",
+                "type": "saving",
+                "timestamp": "2015-03-05T05:33:55.025Z",
+                "message": "<strong>Johan</strong> made a roundup.",
+                "amount": 0.67,
+                "userId": 3,
+                "savingsRuleId": 1
+            }
+        ]
+    }

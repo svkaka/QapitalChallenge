@@ -6,5 +6,6 @@
     <string name="current_of_null">$%.0f</string>
     <string name="dollar_amount">$%.2f</string>
     <string name="week_sum">This week • <strong>$%.2f</strong></string>
+    <string name="transition_goal">goal_image</string>
 
 </resources>
